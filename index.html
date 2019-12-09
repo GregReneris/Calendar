@@ -21,7 +21,7 @@
   <div class="row">
     <h1 class ="col-md-12 center-text">Calendar</h1>
     <div class ="row">
-      <h3 class= "col-md-12" id="timeTitle"> Time PlaceHolder </h3>
+      <h3 class= "col-md-12" id="timeTitle"> </h3>
     </div>
   </div>
 
@@ -47,12 +47,13 @@
 
   <script type="text/javascript">
   
-
+  
   $(document).ready(function() {
-   
+    
     $("#timeTitle").text(moment().format("MMM Do YY"));   
     var currentHour = moment().format("HH:00")
-  
+    
+    // $("#savedMessage").hide();
     var template = `
         <div class="row" id="rowParent">   
           <div id="rowNumber" hidden="true" />
@@ -93,6 +94,11 @@
         var buttonText = row2.find("input").val(); 
         schedule[whichButton] = buttonText;
         localStorage.setItem("schedule", JSON.stringify(schedule));
+        // $("#savedMessage").show(3000 ,function(){
+        //   $("#savedMessage").hide(3000);
+        // });
+        $("#savedMessage").show(500).delay(2000).hide(500);
+
         console.log("Tiny Mom is small: " + whichButton + buttonText);
         //console.log("something else" + $(this).parent().parent().find("input")   )
       });
@@ -120,46 +126,25 @@
 
   </script>
   
+  
+  
+  
+  
+  
+</div>
+<style>
+#savedMessage {
+  display: none;
+}
 
+</style>
 
-
-
-
-
-
+<div class="row">
+  <div class = "col-12">
+    <h5 id="savedMessage">Your Calendar Has Been Saved!</h5>
   </div>
-      
-  
-  
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-  
-  
 
 
 
