@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calendar</title>
+
+  <script src="script.js"></script>
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="moments.js"></script>
+
+  
+</head>
+<body>
+
+<div class="container border">
+
+  <div class="row">
+    <h1 class ="col-md-12 center-text">Calendar</h1>
+    <div class ="row">
+      <h3 class= "col-md-12" id="timeTitle"> Time PlaceHolder </h3>
+    </div>
+  </div>
+
+<!-- 
+  <div class ="row" id="CalCol">   
+       <div class="col-md-2"> Time Placeholder</div>
+          <div class="col-md-8 border">
+            <input type="text"  placeholder="What needs to be done?" name="todo-text" id="todo-text" />
+          </div>
+       <div class="col-md-2 border">
+          <button> Button placeholder </button>
+        </div>
+  </div> 
+
+ -->
+
+
+
+  <div id="testDiv">
+
+
+  </div>
+
+  <script type="text/javascript">
+  
+
+  $(document).ready(function() {
+   
+    $("#timeTitle").text(moment().format("MMM Do YY"));   
+    var currentHour = moment().format("HH:00")
+  
+    var template = `
+        <div class="row" id="rowParent">   
+          <div id="rowNumber" hidden="true" />
+          <div class="col-md-2" id="newDiv"></div>
+              <div class="col-md-8 border">
+                <input type="text"  name="todo-text" id="todo-text" />
+              </div>
+          <div class="col-md-2 border">
+              <button> Save </button>
+            </div>
+       </div> 
+    `;
+
+    console.log("test");
+    for (i=0; i< hours.length; i++){
+    
+      row=$(template);
+      row.find("#rowNumber").text(i);
+      row.find("input").val(schedule[i]); //   attr("placeholder",schedule[i]);
+      row.find("#newDiv").text(hours[i]);
+
+
+      if (currentHour == hours[i]){
+        row.find("input").css("background-color", "red");
+      }
+      else if (currentHour < hours[i]) {
+        row.find("input").css("background-color", "green");
+      }
+      else {
+        row.find("input").css("background-color", "grey");
+      }
+
+      // callback = function(whichButton){ function(){console.log(whichButton)}; }(i);
+
+      row.find("button").click(function(){
+        var row2 = $(this).parents("#rowParent");
+        var whichButton = Number(row2.find("#rowNumber").text());
+        var buttonText = row2.find("input").val(); 
+        schedule[whichButton] = buttonText;
+        localStorage.setItem("schedule", JSON.stringify(schedule));
+        console.log("Tiny Mom is small: " + whichButton + buttonText);
+        //console.log("something else" + $(this).parent().parent().find("input")   )
+      });
+      $("#testDiv").append(row);
+      console.log("inforloop");
+    }
+    
+    // var str = template.fmt( "9:00", "placeholding" );
+    // var row= $(str);
+    // //var c0=$(" <div class='col-md-2'> Time Placeholder</div> <div class='col-md-8 border'> test text </div>");
+    // // var c1=$(" ")
+
+    // // row.append();
+    // $("#testDiv").append(row);
+
+
+    // for (i=0; i <hours.length; i++) {
+    //   // var
+    // }
+
+  })
+
+
+
+
+  </script>
+  
+
+
+
+
+
+
+
+  </div>
+      
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+
+
+
+</body>
+</html>
