@@ -14,14 +14,14 @@
 
   
 </head>
-<body>
+<body class ="bg-warning">
 
-<div class="container border">
+<div class="container bg-info">
 
   <div class="row">
-    <h1 class ="col-md-12 center-text">Calendar</h1>
-    <div class ="row">
-      <h3 class= "col-md-12" id="timeTitle"> </h3>
+    <h1 class ="col-md-12 center-text" id="Calendar">Calendar</h1>
+    <div class ="row justify-content-center">
+      <h3 class= "col-12 center-text" id="timeTitle"> </h3>
     </div>
   </div>
 
@@ -58,16 +58,16 @@
         <div class="row" id="rowParent">   
           <div id="rowNumber" hidden="true" />
           <div class="col-md-2" id="newDiv"></div>
-              <div class="col-md-8 border">
-                <input type="text"  name="todo-text" id="todo-text" />
+              <div class="col-md-8 ">
+                <input type="text" class="w-100" name="todo-text" id="todo-text" />
               </div>
-          <div class="col-md-2 border">
-              <button> Save </button>
+          <div class="col-md-2">
+              <button class="border-dark rounded bg-primary" id="saveButton"> Save </button>
             </div>
-       </div> 
+       </div>
     `;
 
-    console.log("test");
+    console.log("test" + schedule);
     for (i=0; i< hours.length; i++){
     
       row=$(template);
@@ -94,6 +94,7 @@
         var buttonText = row2.find("input").val(); 
         schedule[whichButton] = buttonText;
         localStorage.setItem("schedule", JSON.stringify(schedule));
+        console.log(schedule);
         // $("#savedMessage").show(3000 ,function(){
         //   $("#savedMessage").hide(3000);
         // });
@@ -136,6 +137,18 @@
 #savedMessage {
   display: none;
 }
+
+#Calendar {
+  justify-content: center;
+  text-align: center;
+}
+
+#timeTitle {
+  text-align: center;
+  justify-content: center;
+}
+
+
 
 </style>
 

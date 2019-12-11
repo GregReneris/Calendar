@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <title>Weather App</title>
+</head>
+
+<body class ="bg-warning">
+  <header class ="border bg-dark text-center text-light">
+    <h1 class ="border border-dark">Weather Forecast</h1>
+  </header>
+  <!-- Retrieved data will be dumped here -->
+  <div class="overall">
+    <div class="row">
+      <div class="col-3">
+        Sidebar Placeholder
+      </div>
+      
+      <div class="col-9 border currentDay" Current Day>
+        <div class="row border"> placeholder to remind me to add better margins and borders.
+          <div class="city col-12"> city</div>
+          <div class="icon col-12"> icon</div>
+          <div class="wind col-12"> wind</div>
+          <div class="humidity col-12">humidity</div>
+          <div class="temp col-12">temp</div>
+          <div class="uv col-12">UV</div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <h5 class ="col-12  bg-light text-dark">Five Day Forecast</h5>
+          <div class="row">
+            <div class="col-12"> Five forecast boxes underneath placeholder</div>
+            <div class="col-12 d-flex justify-content-between" id="forecastBox">
+            </div>  
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    // This is our API key. Add your own API key between the ""
+    //DOCUMENTATION: https://openweathermap.org/forecast5
+    var APIKey ="fb3281476c6661fc0b4ca51e7a3be516";
+
+    
+    // test api key "b1b15e88fa797225412429c1c50c122a1" 
+    // Greg's personal ID"fb3281476c6661fc0b4ca51e7a3be516";
+
+    // Here we are building the URL we need to query the database
+    var currentURL = "https://api.openweathermap.org/data/2.5/weather?q=seattle,us&APPID=" +APIKey;
+    var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=seattle,us&cnt=5&APPID=" +APIKey;
+
+
+    function tempConversion(Kelvin){
+      f= (((Kelvin-273.15)*1.8)+32);
+      return Math.round(f * 100) / 100;
+      //℉=((K-273.15)*1.8)+32
+    }
+
+
+    // We then created an AJAX call
+    $.ajax({
+      url: currentURL,
+      method: "GET"
+    }).then(function(response) {
+
+      $(".city").text(response.name);
+      $(".icon").text(response.weather.icon);
+      $(".wind").text(response.wind.speed);
+      $(".humidity").text(response.main.humidity);
+      $(".temp").text( tempConversion(response.main.temp)+" degrees fahrenheit");
+
+      // Create CODE HERE to Log the queryURL
+      console.log(response);
+      // Create CODE HERE to log the resulting object
+      // Create CODE HERE to transfer content to HTML
+      // Create CODE HERE to calculate the temperature (converted from Kelvin)
+      // Hint: To convert from Kelvin to Fahrenheit: F = (K - 273.15) * 1.80 + 32
+      // Create CODE HERE to dump the temperature content into HTML
+
+    });
+
+    $.ajax({
+      url: forecastURL,
+      method: "GET"
+    }).then(function(response) {
+
+
+      var template = `
+          <div>
+          <div class="city col-12"> city</div>
+          <div class="icon col-12"> icon</div>
+          <div class="wind col-12"> wind</div>
+          <div class="humidity col-12">humidity</div>
+          <div class="temp col-12">temp</div>
+          <div class="uv col-12">UV</div>
+          </div>`;
+
+    for (let index = 0; index < 5; index++) {
+        forecast = response.list[index];
+       //box = $("#forecastBox").append( $(template) );
+       
+        html = $( "<div>" );
+        html.append( $('<div class="col-12">').text("icon") );
+        html.append( $('<div class="col-12">').text("wind") );
+        html.append( $('<div class="col-12">').text("humidity") );
+        html.append( $('<div class="col-12">').text( tempConversion( forecast.main.temp ) ) );
+        html.append( $('<div class="col-12">').text("uv") );
+        $("#forecastBox").append(html);
+
+       console.log("i got here");
+    }
+
+
+    });
+
+
+
+
+  </script>
+</body>
+
+</html>
